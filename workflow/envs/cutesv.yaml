@@ -1,0 +1,10 @@
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - cutesv=2.1.1
+  - python=3.9
+  - numpy
+  - scipy
+  - libgfortran=3
+  - libgcc-ng

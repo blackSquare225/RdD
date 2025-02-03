@@ -1,0 +1,12 @@
+configfile: "config/config.yaml"
+
+include: "rules/align.smk"
+include: "rules/svcall.smk"
+
+rule hmga2:
+	input:
+		expand(f"results/{{sample}}.minimap2.sniffles2.filtered.tsv", sample=config["samples"].values()),
+		expand(f"results/{{sample}}.custom.tsv",sample=config["samples"].values()),
+		expand(f"results/{{sample}}.svim2.vcf",sample=config["samples"].values()),
+		expand(f"results/{{sample}}/{{sample}}.minimap2.cuteSV.vcf.gz", sample=config["samples"].values())
+		#expand(f"alignments/{{sample}}.mosdepth.regions.bed.gz", sample=config["samples"].values())
