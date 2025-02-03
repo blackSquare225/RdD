@@ -1,7 +1,7 @@
-# My-Snakemake-Pipeline
+# RΔD
 
 ## Description
-This is a Snakemake-based pipeline designed for [brief description of the pipeline's purpose, e.g., "genomic data analysis"]. It automates the process of [specific tasks, e.g., "preprocessing sequencing data, quality control, and alignment"] using modular workflows and reproducible environments.
+This is a Snakemake-based pipeline designed for fast and efficient identification of deletions in target long-read sequencing data. It automates the process of QC, alignment and deletion calling using modular workflows and reproducible environments.
 
 ## Features
 - **Reproducibility**: Uses Snakemake with Conda/Mamba for environment management.
