@@ -3,12 +3,6 @@
 ## Description
 This is a Snakemake-based pipeline designed for fast and efficient identification of deletions in target long-read sequencing data. It automates the process of QC, alignment and deletion calling using modular workflows and reproducible environments.
 
-## Features
-- **Reproducibility**: Uses Snakemake with Conda/Mamba for environment management.
-- **Scalability**: Supports multi-core processing and can be run on high-performance computing clusters.
-- **Modular**: Easy to add or modify steps in the pipeline.
-- **Preconfigured Environments**: Dependencies are automatically installed in isolated environments using Conda/Mamba.
-
 ## Requirements
 
 Before using the pipeline, ensure you have the following installed:
@@ -21,6 +15,27 @@ Before using the pipeline, ensure you have the following installed:
 To get started, clone this repository to your local machine:
 
 ```bash
-git clone https://github.com/<your-username>/My-Snakemake-Pipeline.git
-cd My-Snakemake-Pipeline
+git clone https://github.com/blackSquare225/RdD.git
+cd RdD
+```
 
+### Step 2: Install Snakemake and Set Up the Mamba Environment
+
+We recommend using Mamba for installing Snakemake as it is faster than Conda. 
+First, install Mamba (if not installed) working on base enviroment:
+```bash
+conda install mamba -c conda-forge
+```
+
+Then, create the Snakemake environment using Mamba:
+```bash
+mamba create -n snakemake -c conda-forge -c bioconda snakemake
+mamba activate snakemake_env
+```
+
+Check that Snakemake is correctly installed by running:
+```bash
+snakemake --version
+```
+
+### Step 3: Run the pipeline 
