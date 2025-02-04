@@ -75,7 +75,6 @@ if [ "$multi_sample" = true ] && [ "$single_sample" = true ]; then
     usage
 fi
 
-<<<<<<< HEAD
 # Create the config directory if it doesn't exist
 mkdir -p config
 CONFIG_FILE="config/config.yaml"
@@ -88,9 +87,8 @@ echo "" >> $CONFIG_FILE
 if [ "$multi_sample" = true ]; then
 
     echo "Running multi-sample mode"
-=======
+
 if [ "$multi_sample" = true ]; then
->>>>>>> b209097d01915214c0facee6605ef999e26b35bb
     
     # Ensure required arguments for multi-sample mode
     if [ -z "$name" ] || [ -z "$fastqdir" ]; then
