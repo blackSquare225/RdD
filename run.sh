@@ -76,42 +76,38 @@ if [ "$multi_sample" = true ] && [ "$single_sample" = true ]; then
 fi
 
 if [ "$multi_sample" = true ]; then
+    
     # Ensure required arguments for multi-sample mode
     if [ -z "$name" ] || [ -z "$fastqdir" ]; then
         echo "Error: Multi-sample mode requires both a run name and a fastq directory."
         usage
     fi
+    
     # Ensure fastqdir exists
     if [ ! -d "$fastqdir" ]; then
         echo "Error: Directory '$fastqdir' does not exist."
         exit 1
     fi
+    
     # Create output directory if it doesn't exist
     output_dir="data"
     mkdir -p "$output_dir"
+    
     echo "Running in multi-sample mode..."
+    
     files=($(find "$fastqdir" -type d -name "barcode*"))
+    
     for dir in "${files[@]}"; do
+    
         bc=$(basename "$dir")
         cat "$dir"/*fastq.gz > "data/${name}_${bc}.fastq.gz"
+    
     done
 
 elif [ "$single_sample" = true ]; then
+    
     # Ensure required arguments for single-sample mode
-    if [ -z "$name" ] || [ -z "$fastq_file" ]; then
-        echo "Error: Single-sample mode requires both a sample name and a fastq file."
-        usage
-    fi
-    # Ensure fastq file exists
-    if [ ! -f "$fastq_file" ]; then
-        echo "Error: Fastq file '$fastq_file' does not exist."
-        exit 1
-    fi
-    # Create output directory if it doesn't exist
-    output_dir="data"
-    mkdir -p "$output_dir"
-    echo "Running in single-sample mode for sample: $name"
-    cp "$fastq_file" "data/${name}.fastq.gz"
+    
 fi
 
 # Create the config directory if it doesn't exist
@@ -125,23 +121,56 @@ echo "" >> $CONFIG_FILE
 
 # **Handling Multi-Sample Mode**
 if [ "$multi_sample" = true ]; then
+    
     echo "samples:" >> $CONFIG_FILE
+    
     sample_index=1
+    
     for dir in "$fastqdir"/barcode*; do
+    
         if [ -d "$dir" ]; then  # Ensure it's a directory
+    
             bc=$(basename "$dir")
             output_file="data/${name}_${bc}.fastq.gz"
             cat "$dir"/*fastq.gz > "$output_file"
             echo "  sample${sample_index}: $(basename "$output_file" .fastq.gz)" >> $CONFIG_FILE
             ((sample_index++))
+    
         fi
+    
     done
 
 elif [ "$single_sample" = true ]; then
+
     echo "samples:" >> $CONFIG_FILE
-    sample_name=$(basename "$fastq_file" .fastq.gz)
-    cp "$fastq_file" "data/${name}.fastq.gz"
+
+    # Extract filename from the provided path
+    original_name=$(basename "$fastq_file")
+
+    # Check if the file has a valid extension (.fastq.gz or .fq.gz)
+    if [[ ! "$original_name" =~ \.(fastq|fq)\.gz$ ]]; then
+        echo "Error: Input file '$fastq_file' must be a GZ-compressed FASTQ file (.fastq.gz or .fq.gz)"
+        exit 1
+    fi
+
+    # Check if the file is actually compressed (not just named ".gz")
+    if ! gzip -t "$fastq_file" >/dev/null 2>&1; then
+        echo "Error: File '$fastq_file' has a .gz extension but is not actually compressed."
+        exit 1
+    fi
+
+    # Ensure the output directory exists
+    mkdir -p data
+
+    # Define the expected file path for Snakemake
+    new_name="data/${name}.fastq.gz"
+
+    # Create a symlink instead of renaming or copying
+    ln -s "$(realpath "$fastq_file")" "$new_name"
+
+    # Add the sample to the config.yaml file
     echo "  sample1: ${name}" >> $CONFIG_FILE
+
 fi
 
 
@@ -150,5 +179,4 @@ echo "Configuration file generated at $CONFIG_FILE"
 # Run analysis
 echo "Running analysis with $threads threads..."
 snakemake runall --cores "$threads" --use-conda --rerun-incomplete
-
 

@@ -3,7 +3,7 @@ configfile: "config/config.yaml"
 include: "rules/align.smk"
 include: "rules/svcall.smk"
 
-rule hmga2:
+rule runall:
 	input:
 		expand(f"results/{{sample}}.minimap2.sniffles2.filtered.tsv", sample=config["samples"].values()),
 		expand(f"results/{{sample}}.custom.tsv",sample=config["samples"].values()),
