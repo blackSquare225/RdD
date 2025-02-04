@@ -1,0 +1,7 @@
+## Do not include conda enviroment (managed by snakemake)
+.snakemake/
+
+## Do not include huge size files 
+resources/hg38.fa.gz
+resources/hg38.mmi
+
