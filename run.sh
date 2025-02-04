@@ -75,6 +75,7 @@ if [ "$multi_sample" = true ] && [ "$single_sample" = true ]; then
     usage
 fi
 
+<<<<<<< HEAD
 # Create the config directory if it doesn't exist
 mkdir -p config
 CONFIG_FILE="config/config.yaml"
@@ -87,6 +88,9 @@ echo "" >> $CONFIG_FILE
 if [ "$multi_sample" = true ]; then
 
     echo "Running multi-sample mode"
+=======
+if [ "$multi_sample" = true ]; then
+>>>>>>> b209097d01915214c0facee6605ef999e26b35bb
     
     # Ensure required arguments for multi-sample mode
     if [ -z "$name" ] || [ -z "$fastqdir" ]; then
@@ -115,7 +119,28 @@ if [ "$multi_sample" = true ]; then
     
     done
 
+<<<<<<< HEAD
     # write dynamic part of the config file
+=======
+elif [ "$single_sample" = true ]; then
+    
+    # Ensure required arguments for single-sample mode
+    
+fi
+
+# Create the config directory if it doesn't exist
+mkdir -p config
+CONFIG_FILE="config/config.yaml"
+
+# Write the static parts of the config file
+echo "genome: resources/hg38.fa.gz" > $CONFIG_FILE
+echo "threads: $threads" >> $CONFIG_FILE
+echo "" >> $CONFIG_FILE
+
+# **Handling Multi-Sample Mode**
+if [ "$multi_sample" = true ]; then
+    
+>>>>>>> b209097d01915214c0facee6605ef999e26b35bb
     echo "samples:" >> $CONFIG_FILE
     
     sample_index=1
@@ -134,12 +159,17 @@ if [ "$multi_sample" = true ]; then
     
     done
 
+<<<<<<< HEAD
 # **Handling Multi-Sample Mode**
 elif [ "$single_sample" = true ]; then
 
     echo "Running single-sample mode"
    
     # Ensure required arguments for single-sample mode
+=======
+elif [ "$single_sample" = true ]; then
+
+>>>>>>> b209097d01915214c0facee6605ef999e26b35bb
     echo "samples:" >> $CONFIG_FILE
 
     # Extract filename from the provided path
@@ -169,7 +199,10 @@ elif [ "$single_sample" = true ]; then
     # Add the sample to the config.yaml file
     echo "  sample1: ${name}" >> $CONFIG_FILE
 
+<<<<<<< HEAD
     
+=======
+>>>>>>> b209097d01915214c0facee6605ef999e26b35bb
 fi
 
 

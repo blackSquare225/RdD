@@ -5,4 +5,12 @@ include: "rules/svcall.smk"
 
 rule runall:
 	input:
+<<<<<<< HEAD
 		expand(f"results/{{sample}}.results.tsv",sample=config["samples"].values()),
+=======
+		expand(f"results/{{sample}}.minimap2.sniffles2.filtered.tsv", sample=config["samples"].values()),
+		expand(f"results/{{sample}}.custom.tsv",sample=config["samples"].values()),
+		expand(f"results/{{sample}}.svim2.vcf",sample=config["samples"].values()),
+		expand(f"results/{{sample}}/{{sample}}.minimap2.cuteSV.vcf.gz", sample=config["samples"].values())
+		#expand(f"alignments/{{sample}}.mosdepth.regions.bed.gz", sample=config["samples"].values())
+>>>>>>> b209097d01915214c0facee6605ef999e26b35bb
