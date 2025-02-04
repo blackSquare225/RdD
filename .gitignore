@@ -5,3 +5,9 @@
 resources/hg38.fa.gz
 resources/hg38.mmi
 
+# DO not include the output directories because they are generated during the pipeline
+data/
+benchmarks/
+alignments/
+results/
+logs/
