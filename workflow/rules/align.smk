@@ -1,3 +1,30 @@
+rule get_reference_genome:
+	output:
+		"resources/hg38.fa.gz"
+	threads: 1 
+	log:
+		"logs/get_reference_genome.log"
+	benchmark:
+		"benckmarks/get_reference_genome.tsv"
+	shell:
+		"""
+		wget -O {output} ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/001/405/GCA_000001405.15_GRCh38/seqs_for_alignment_pipelines.ucsc_ids/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.gz
+		"""
+
+rule minimap2_index:
+	input:
+		"resources/hg38.fa.gz"
+	output:
+		"resources/hg38.mmi"
+	threads:
+		config["threads"]
+	log:
+		"logs/minimap2_index.log"
+	benchmark:
+		"benckmarks/minimap2_index.tsv"
+	shell:
+		"minimap2 -t {threads} -d {output} {input}"
+
 rule minimap2:
 	input:
 		config["genome"],
