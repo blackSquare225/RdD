@@ -4,17 +4,26 @@
 usage() {
     echo "Usage: bash $0 [-m -n <run_name> -f <fastq_directory>] [-s -n <sample_name> -f <fastq_file>] [-t <threads>]"
     echo ""
-    echo "Options:"
+    echo "Options to select run mode:"
     echo "  -m, --multi      Run in multi-sample mode (requires run name and fastq directory)"
     echo "  -s, --single     Run in single-sample mode (requires sample name and fastq file)"
     echo "  -n, --name       Name of the run (for multi-sample mode) or sample name (for single-sample mode)"
-    echo "  --fastqdir   Path to barcoded directories (e.g., /path/to/fastq_pass/) (only for multi-sample mode)"
-    echo "  --fastqfile  Path to the FASTQ file (only for single-sample mode)"
+    echo "  -d, --fastqdir   Path to barcoded directories (e.g., /path/to/fastq_pass/) (only for multi-sample mode)"
+    echo "  -f, --fastqfile  Path to the FASTQ file (only for single-sample mode)"
     echo "  -t, --threads    Number of threads to use (default: 1)"
+    echo ""
+    echo "Options for deletion variant calling by DELecter"
+    echo "  --min_size       Minimum deletion size (in bp) to take into account. (default: 300)"
+    echo "  --max_size       Maximum deletion size (in bp) to take into account. (default: 4000)"
+    echo "  --mapq           Reads with mapping quality lower than this value will be ignored. (default: 25)"
+    echo "  --min_support    Minimum number of supporting reads for a DEL to be reported. (default 100)"
+    echo "  --min_len        Minimum DEL length (in bp) to be reported. (default 1000)"
+    echo "  --exclude_flag   Bitwise sam flag to exclude. (default 3844)"
+    echo "  --tolerance      Tolerance between breakpoints (in bp) for clustering deletions as the same event. (default: 100)"    
     echo "  -h, --help       Display this help message"
     echo ""
     echo "Examples:"
-    echo "  $0 -m -n run01 -f /path/to/fastq_pass/ -t 8"
+    echo "  $0 -m -n run01 -d /path/to/fastq_pass/ -t 8"
     echo "  $0 -s -n sample01 -f /path/to/sample.fastq.gz -t 4"
     exit 1
 }
@@ -32,6 +41,13 @@ name=""
 fastq_file=""
 fastqdir=""
 threads=1  # Default number of threads
+min_size=300
+max_size=4000
+mapq=25
+min_support=100
+min_len=1000
+exclude_flag=3844
+tolerance=100
 
 while [[ "$#" -gt 0 ]]; do
     case "$1" in
@@ -47,16 +63,44 @@ while [[ "$#" -gt 0 ]]; do
             name="$2"
             shift 2
             ;;
-        --fastqdir)
+        -d|--fastqdir)
             fastqdir="$2"
             shift 2
             ;;
-        --fastqfile)
+        -f|--fastqfile)
             fastq_file="$2"
             shift 2
             ;;
         -t|--threads)
             threads="$2"
+            shift 2
+            ;;
+        --min_size)
+            min_size="$2"
+            shift 2
+            ;;
+        --max_size)
+            max_size="$2"
+            shift 2
+            ;;
+        --mapq)
+            mapq="$2"
+            shift 2
+            ;;
+        --min_support)
+            min_support="$2"
+            shift 2
+            ;;
+        --min_len)
+            min_len="$2"
+            shift 2
+            ;;
+        --exclude_flag)
+            exclude_flag="$2"
+            shift 2
+            ;;
+        --tolerance)
+            tolerance="$2"
             shift 2
             ;;
         -h|--help)
@@ -87,6 +131,15 @@ fi
 # Write the static parts of the config file
 echo "threads: $threads" >> $CONFIG_FILE
 echo "" >> $CONFIG_FILE
+echo ""
+echo "min_size: $minsize"
+echo "max_size: $max_size"
+echo "mapq: $mapq"
+echo "min_support: $min_support"
+echo "min_len: $min_len"
+echo "exclude_flag: $exclude_flag"
+echo "tolerance: $tolerance"
+echo ""
 
 ## Handling multi-sample Mode
 if [ "$multi_sample" = true ]; then
