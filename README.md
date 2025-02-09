@@ -19,7 +19,7 @@ git clone https://github.com/blackSquare225/RdD.git
 cd RdD
 ```
 
-### Step 2: Install Snakemake and Set Up the Mamba Environment
+### Step 2: Install Snakemake and Set Up the mamba environment
 
 We recommend using Mamba for installing Snakemake as it is faster than Conda. 
 First, install Mamba (if not installed) working on base enviroment:
@@ -27,7 +27,7 @@ First, install Mamba (if not installed) working on base enviroment:
 conda install mamba -c conda-forge
 ```
 
-Then, create the Snakemake environment using Mamba:
+Then, create the Snakemake environment using mamba:
 ```bash
 mamba create -n snakemake -c conda-forge -c bioconda snakemake
 mamba activate snakemake_env

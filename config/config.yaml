@@ -1,4 +1,12 @@
-threads: 8
+threads: 20
+
+min_size: 300
+max_size: 4000
+mapq: 25
+min_support: 100
+min_len: 1000
+exclude_flag: 3844
+tolerance: 100
 
 samples:
   sample1: test

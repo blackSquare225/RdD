@@ -131,15 +131,14 @@ fi
 # Write the static parts of the config file
 echo "threads: $threads" >> $CONFIG_FILE
 echo "" >> $CONFIG_FILE
-echo ""
-echo "min_size: $minsize"
-echo "max_size: $max_size"
-echo "mapq: $mapq"
-echo "min_support: $min_support"
-echo "min_len: $min_len"
-echo "exclude_flag: $exclude_flag"
-echo "tolerance: $tolerance"
-echo ""
+echo "min_size: $min_size" >> $CONFIG_FILE
+echo "max_size: $max_size" >> $CONFIG_FILE
+echo "mapq: $mapq" >> $CONFIG_FILE 
+echo "min_support: $min_support" >> $CONFIG_FILE
+echo "min_len: $min_len" >> $CONFIG_FILE
+echo "exclude_flag: $exclude_flag" >> $CONFIG_FILE
+echo "tolerance: $tolerance" >> $CONFIG_FILE
+echo "" >> $CONFIG_FILE
 
 ## Handling multi-sample Mode
 if [ "$multi_sample" = true ]; then

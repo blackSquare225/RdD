@@ -46,18 +46,37 @@
 #		"""
 
 
-rule del_detecter:
+rule DELecter:
 	input:
-		script="workflow/scripts/run_v2.py",
+		script="workflow/scripts/DELecter.py",
 		bam="alignments/{sample}.minimap2.srt.bam",
 		bai="alignments/{sample}.minimap2.srt.bam.bai"
 	output:
 		tsv="results/{sample}.results.tsv"
+	params:
+		min_size=config["min_size"],
+		max_size=config["max_size"],
+		mapq=config["mapq"],
+		min_support=config["min_support"],
+		min_len=config["min_len"],
+		exclude_flag=config["exclude_flag"],
+		tolerance=config["tolerance"]
 	log:
-		"logs/{sample}.custom_tool.log"
+		"logs/{sample}.DELecter.log"
 	benchmark:
-		"benchmarks/{sample}.custom_tool.tsv"
+		"benchmarks/{sample}.DELecter.tsv"
 	conda:
-		"../envs/custom_tool.yaml"
+		"../envs/DELecter.yaml"
 	shell:
-		"python {input.script} --input_bam {input.bam} --output_file {output.tsv}"
+		"""
+		python {input.script} \
+			--input_bam {input.bam} \
+			--output_file {output.tsv} \
+			--min_size {params.min_size} \
+			--max_size {params.max_size} \
+			--mapq {params.mapq} \
+			--min_support {params.min_support} \
+			--min_len {params.min_len} \
+			--exclude_flag {params.exclude_flag} \
+			--tolerance {params.tolerance} 2> {log}
+		"""
