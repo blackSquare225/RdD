@@ -1,6 +1,6 @@
 import argparse
 import pysam
-from collections import defaultdict
+from collections import defaultdict, Counter
 import numpy as np
 import csv
 
@@ -63,12 +63,6 @@ def cluster_deletions(deletions, tolerance=100):
 
     return list(clusters.values())
 
-
-import argparse
-import pysam
-from collections import defaultdict, Counter
-import numpy as np
-import csv
 
 def summarize_clusters(clusters, bam_file, output_file, mapq=25, exclude_flag=3844, min_len=1000, length_tolerance=0.2, min_read_support=100):
     bam = pysam.AlignmentFile(bam_file, "rb")

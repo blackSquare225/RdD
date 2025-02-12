@@ -46,7 +46,7 @@
 #		"""
 
 
-rule DELecter:
+rule call_deletions:
 	input:
 		script="workflow/scripts/DELecter.py",
 		bam="alignments/{sample}.minimap2.srt.bam",
