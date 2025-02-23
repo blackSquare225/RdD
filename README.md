@@ -13,22 +13,15 @@ personal github: **https://github.com/endertial/**
 For questions or support, reach out via GitHub Issues or email the author
 
 ## 📖 Table of Contents
-1. [🚀 Features](#-features)
 2. [🛠 Installation](#-installation)
 3. [📌 Quick Usage](#-quick-usage)
-4. [🔍 How the Script Works](#-how-the-script-works)
-5. [❗List of commands](#-list-of-commands)
-6. [🔧 Troubleshooting](#-troubleshooting)
+4. [🔍 How the Code Works](#-how-the-script-works)
+   - [🔹 Multi-Sample Mode](#-multi-sample-mode)
+   - [🔹 Single-Sample Mode](#-single-sample-mode)
+   - [🚀 Downstream analysis](#-downstream-analysis)
+5. [❗List of Commands](#-list-of-commands)
 7. [👨‍💻 Contributing](#-contributing)
 8. [📖 Citing](#-citing)
-
-
-## 🚀 Features
-- Supports **multi-sample mode** (processes all FASTQ files in a directory).
-- Supports **single-sample mode** (processes a single FASTQ file).
-- Configurable number of threads.
-- Creates a structured `config.yaml` file for Snakemake.
-- Provides detailed error messages for troubleshooting.
 
 
 ## 🛠 Installation
@@ -76,7 +69,7 @@ Processes a single FASTQ file.
 ```
 
 
-## 🔍 How the Script Works
+## 🔍 How the Code Works
 
 ### **🔹 Multi-Sample Mode**
 Nanopore sequencing allows for multiplexing, meaning multiple samples can be sequenced in a single run. To differentiate them, barcodes are added to each sample before sequencing. The sequencing software then sorts the reads into separate barcoded directories.
@@ -91,46 +84,33 @@ Since Snakemake requires input files to follow a specific pre-defined format, th
 
 In summary, single-sample mode is ideal for cases where only one sample needs to be analyzed, providing flexibility while maintaining compatibility with the Snakemake workflow.
 
-### Downstream analysis 
-
+### **🚀 Downstream analysis**
 This pipeline automates the processing of Oxford Nanopore sequencing data by handling both multi-sample and single-sample modes. It aligns sequencing reads using Minimap2, sorts the resulting BAM files, and then processes them using DELecter, a custom structural variant (SV) detection tool. DELecter implements a union-find algorithm to cluster reads that belong to the same SV event based on the proximity of their start and end breakpoints. This approach enables precise identification of structural variants with high confidence.
 
 
-## List of Command
+## ❗ List of Commands
 
 ### Options to select run mode:
-
 | Command | Description | 
-| -m, --multi      |  Run in multi-sample mode (requires run name and fastq directory)
-|  -s, --single    |  Run in single-sample mode (requires sample name and fastq file)
-|  -n, --name      |  Name of the run (for multi-sample mode) or sample name (for single-sample mode)
-|  -d, --fastqdir  |  Path to barcoded directories (e.g., /path/to/fastq_pass/) (only for multi-sample mode)
-|  -f, --fastqfile |  Path to the FASTQ file (only for single-sample mode)
-|  -t, --threads   |  Number of threads to use (default: 1)
-|  -h, --help      |  Display this help message
+|---------|-------------|
+|  -m, --multi     |  Run in multi-sample mode (requires run name and fastq directory) |
+|  -s, --single    |  Run in single-sample mode (requires sample name and fastq file) |
+|  -n, --name      |  Name of the run (for multi-sample mode) or sample name (for single-sample mode) |
+|  -d, --fastqdir  |  Path to barcoded directories (e.g., /path/to/fastq_pass/) (only for multi-sample mode) |
+|  -f, --fastqfile |  Path to the FASTQ file (only for single-sample mode) |
+|  -t, --threads   |  Number of threads to use (default: 1) |
+|  -h, --help      |  Display this help message |
 
 ### Options for deletion variant calling by DELecter
-
-| Command | Description | 
-|  --min_size      |  Minimum deletion size (in bp) to take into account. (default: 300)
-|  --max_size      |  Maximum deletion size (in bp) to take into account. (default: 4000)
-|  --mapq          |   Reads with mapping quality lower than this value will be ignored. (default: 25)
-|  --min_support   |  Minimum number of supporting reads for a DEL to be reported. (default 100)
-|  --min_len       |   Minimum DEL length (in bp) to be reported. (default 1000)
-|  --exclude_flag  |   Bitwise sam flag to exclude. (default 3844)
-|  --tolerance     |   Tolerance between breakpoints (in bp) for clustering deletions as the same event. (default: 100)
-
-
-
-
-
-| Issue | Solution |
-|--------|----------|
-| `Error: Missing required arguments.` | Ensure you provided `--multi` or `--single` with the required flags. |
-| `ln: failed to create symbolic link: File exists` | The script now **removes existing symlinks automatically**. |
-| `Error: Input file must be a GZ-compressed FASTQ file` | Ensure the file is properly compressed using `gzip -t filename`. |
-| `Error: File format not recognized` | Check that the file ends with `.fastq.gz` or `.fq.gz`. |
-
+| Command | Description |
+|---------|-------------| 
+|  --min_size      |  Minimum deletion size (in bp) to take into account. (default: 300) |
+|  --max_size      |  Maximum deletion size (in bp) to take into account. (default: 4000) |
+|  --mapq          |   Reads with mapping quality lower than this value will be ignored. (default: 25) |
+|  --min_support   |  Minimum number of supporting reads for a DEL to be reported. (default 100) |
+|  --min_len       |   Minimum DEL length (in bp) to be reported. (default 1000) |
+|  --exclude_flag  |   Bitwise sam flag to exclude. (default 3844) |
+|  --tolerance     |   Tolerance between breakpoints (in bp) for clustering deletions as the same event. (default: 100) |
 
 
 ## 👨‍💻 Contributing
