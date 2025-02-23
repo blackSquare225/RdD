@@ -7,8 +7,8 @@ This is a Snakemake-based pipeline that integrates a custom algorithm (DELecter)
 
 Alessio Enderti 
 
-email: **alessioenderti@gmail.com**
-personal github: **https://github.com/endertial/**
+- email: **alessioenderti@gmail.com**
+- personal github: **https://github.com/endertial/**
 
 For questions or support, reach out via GitHub Issues or email the author
 
