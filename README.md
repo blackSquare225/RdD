@@ -65,7 +65,7 @@ bash run.sh --multi -name <run_name> --fastqdir </path/to/fastq_pass/> --threads
 ### **2️⃣ Single-Sample Mode**
 Processes a single FASTQ file.
 ```bash
-./script.sh --single -name <sample_name> --fastqfile <path/to/fastq.gz/file> --threads <num_of_threads>
+bash run.sh --single -name <sample_name> --fastqfile <path/to/fastq.gz/file> --threads <num_of_threads>
 ```
 
 
@@ -93,24 +93,24 @@ This pipeline automates the processing of ONT sequencing data by handling both m
 ### Options to select run mode:
 | Command | Description | 
 |---------|-------------|
-|  -m, --multi     |  Run in multi-sample mode (requires run name and fastq directory) |
-|  -s, --single    |  Run in single-sample mode (requires sample name and fastq file) |
-|  -n, --name      |  Name of the run (for multi-sample mode) or sample name (for single-sample mode) |
-|  -d, --fastqdir  |  Path to barcoded directories (e.g., /path/to/fastq_pass/) (only for multi-sample mode) |
-|  -f, --fastqfile |  Path to the FASTQ file (only for single-sample mode) |
-|  -t, --threads   |  Number of threads to use (default: 1) |
-|  -h, --help      |  Display this help message |
+| -m, --multi     |  Run in multi-sample mode (requires run name and fastq directory) |
+| -s, --single    |  Run in single-sample mode (requires sample name and fastq file) |
+| -n, --name      |  Name of the run (for multi-sample mode) or sample name (for single-sample mode) |
+| -d, --fastqdir  |  Path to barcoded directories (e.g., /path/to/fastq_pass/) (only for multi-sample mode) |
+| -f, --fastqfile |  Path to the FASTQ file (only for single-sample mode) |
+| -t, --threads   |  Number of threads to use (default: 1) |
+| -h, --help      |  Display this help message |
 
 ### Options for deletion variant calling by DELecter
-| Command | Description |
-|---------|-------------| 
-|  --min_size        |  Minimum deletion size (in bp) to take into account. (default: 300) |
-|  --max_size        |  Maximum deletion size (in bp) to take into account. (default: 4000) |
-|  --mapq            |   Reads with mapping quality lower than this value will be ignored. (default: 25) |
-|  --min_support     |  Minimum number of supporting reads for a DEL to be reported. (default 100) |
-|  --min_len         |   Minimum DEL length (in bp) to be reported. (default 1000) |
-|  --exclude_flag    |   Bitwise sam flag to exclude. (default 3844) |
-|  --tolerance       |   Tolerance between breakpoints (in bp) for clustering deletions as the same event. (default: 100) |
+|  Command  | Description |
+|-----------|-------------| 
+| --min_size         |  Minimum deletion size (in bp) to take into account. (default: 300) |
+| --max_size         |  Maximum deletion size (in bp) to take into account. (default: 4000) |
+| --mapq             |   Reads with mapping quality lower than this value will be ignored. (default: 25) |
+| --min_support      |  Minimum number of supporting reads for a DEL to be reported. (default 100) |
+| --min_len          |   Minimum DEL length (in bp) to be reported. (default 1000) |
+| --exclude_flag     |   Bitwise sam flag to exclude. (default 3844) |
+| --tolerance        |   Tolerance between breakpoints (in bp) for clustering deletions as the same event. (default: 100) |
 
 
 ## 👨‍💻 Contributing
