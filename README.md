@@ -57,7 +57,7 @@ cd RdD
 ## 📌 Quick Usage
 
 ### **1️⃣ Multi-Sample Mode**
-Processes all fastq.gz files inside barcoded directories in fast_pass/ output ONT.
+Processes all FASTQ files inside barcoded directories in fast_pass/ output ONT.
 ```bash
 bash run.sh --multi -name <run_name> --fastqdir </path/to/fastq_pass/> --threads <num_of_threads>
 ```
