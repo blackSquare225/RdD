@@ -1,7 +1,7 @@
 # RΔD
 
 ## Description
-This is a Snakemake-based pipeline that integrates a custom algorithm (DELecter) designed for fast and efficient identification of deletions in target long-read sequencing data. It automates the process of QC, alignment and deletion calling using modular workflows and reproducible environments.
+This is a Snakemake-based pipeline that integrates a custom algorithm (DELecter) designed for fast and efficient identification of deletions in target DNA long-read sequencing data. It automates the process of QC, alignment and deletion calling using modular workflows and reproducible environments.
 
 # Author
 
@@ -72,20 +72,20 @@ Processes a single FASTQ file.
 ## 🔍 How the Code Works
 
 ### **🔹 Multi-Sample Mode**
-Nanopore sequencing allows for multiplexing, meaning multiple samples can be sequenced in a single run. To differentiate them, barcodes are added to each sample before sequencing. The sequencing software then sorts the reads into separate barcoded directories.
-When using multi-sample mode, the script processes all barcoded directories inside the fastq_pass/ (`--fastqdir`) folder, which is the standard output directory of an ONT (Oxford Nanopore Technologies) sequencing run. The script scans the fastq_pass/ directory for all barcode folders (barcode01, barcode02, etc.). For each barcode folder it merges all FASTQ files inside that barcode folder into a single FASTQ file. The merged file is stored in the data/ directory with a naming convention that includes the run name (`--name`) and barcode. It then updates the configuration file (config.yaml) to ensure snakemake run, which processes each sample separately.
+ONT (Oxford Nanopore Technology) sequencing allows for multiplexing, meaning multiple samples can be sequenced in a single run. To differentiate them, barcodes are added to each sample before sequencing. The sequencing software then sorts the reads into separate barcoded directories.
+When using multi-sample mode, the script processes all barcoded directories inside the fastq_pass/ (`--fastqdir`) folder, which is the standard output directory of an ONT sequencing run. The script scans the `fastq_pass/` directory for all barcode folders (barcode01, barcode02, etc.). For each barcode folder it merges all FASTQ files inside that barcode folder into a single FASTQ file. The merged file is stored in the `data/` directory with a naming convention that includes the run name (`--name`) and barcode. It then updates the configuration file (`config.yaml`) to ensure snakemake run, which processes each sample separately.
 
-In summary, multi-sample mode is ideal for analyzing multiple samples directly from the Nanopore output, without the need to manually reorganize or move files. This ensures an efficient and streamlined workflow for handling multiplexed sequencing runs.
+In summary, multi-sample mode is ideal for analyzing multiple samples directly from ONT output, without the need to manually reorganize or move files. This ensures an efficient and streamlined workflow for handling multiplexed sequencing runs.
 
 ### **🔹 Single-Sample Mode**
-In single-sample mode, the script is designed to process a single FASTQ file instead of scanning multiple barcoded directories. This mode is useful when sequencing only one sample or when working with a pre-extracted fastq.gz file instead of a full Nanopore sequencing run.
+In single-sample mode, the script is designed to process a single FASTQ file instead of scanning multiple barcoded directories. This mode is useful when sequencing only one sample or when working with a pre-extracted FASTQ file instead of a full Nanopore sequencing run.
 The user must directly specify the path to a single fastq.gz (`--fastqfile`). Additionally, the user provides a sample name (`--name`), which is used in the output configuration.
-Since Snakemake requires input files to follow a specific pre-defined format, the script ensures compatibility by creating a symbolic link inside the data/ directory, renaming the input file accordingly. This allows the pipeline to recognize and process the sample correctly, even if the original file has a different name.
+Since Snakemake requires input files to follow a specific pre-defined format, the script ensures compatibility by creating a symbolic link inside the `data/` directory, renaming the input file accordingly. This allows the pipeline to recognize and process the sample correctly, even if the original file has a different name.
 
 In summary, single-sample mode is ideal for cases where only one sample needs to be analyzed, providing flexibility while maintaining compatibility with the Snakemake workflow.
 
 ### **🚀 Downstream analysis**
-This pipeline automates the processing of Oxford Nanopore sequencing data by handling both multi-sample and single-sample modes. It aligns sequencing reads using Minimap2, sorts the resulting BAM files, and then processes them using DELecter, a custom structural variant (SV) detection tool. DELecter implements a union-find algorithm to cluster reads that belong to the same SV event based on the proximity of their start and end breakpoints. This approach enables precise identification of structural variants with high confidence.
+This pipeline automates the processing of ONT sequencing data by handling both multi-sample and single-sample modes. It aligns sequencing reads using `minimap2 -ax map-ont`, sorts the resulting BAM files, and then processes them using **DELecter**, a custom DEL structural variant (SV) detection tool. DELecter implements a union-find algorithm to cluster reads that belong to the same DEL SV event based on the proximity of their start and end breakpoints enabling precise identification with high confidence.
 
 
 ## ❗ List of Commands
