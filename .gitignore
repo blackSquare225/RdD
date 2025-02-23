@@ -6,7 +6,7 @@ resources/hg38.fa.gz
 resources/hg38.mmi
 
 # DO not include the output directories because they are generated during the pipeline
-config/
+config/config.yaml
 data/
 benchmarks/
 alignments/
