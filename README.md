@@ -104,13 +104,13 @@ This pipeline automates the processing of ONT sequencing data by handling both m
 ### Options for deletion variant calling by DELecter
 | Command | Description |
 |---------|-------------| 
-|  --min_size      |  Minimum deletion size (in bp) to take into account. (default: 300) |
-|  --max_size      |  Maximum deletion size (in bp) to take into account. (default: 4000) |
-|  --mapq          |   Reads with mapping quality lower than this value will be ignored. (default: 25) |
-|  --min_support   |  Minimum number of supporting reads for a DEL to be reported. (default 100) |
-|  --min_len       |   Minimum DEL length (in bp) to be reported. (default 1000) |
-|  --exclude_flag  |   Bitwise sam flag to exclude. (default 3844) |
-|  --tolerance     |   Tolerance between breakpoints (in bp) for clustering deletions as the same event. (default: 100) |
+|  --min_size        |  Minimum deletion size (in bp) to take into account. (default: 300) |
+|  --max_size        |  Maximum deletion size (in bp) to take into account. (default: 4000) |
+|  --mapq            |   Reads with mapping quality lower than this value will be ignored. (default: 25) |
+|  --min_support     |  Minimum number of supporting reads for a DEL to be reported. (default 100) |
+|  --min_len         |   Minimum DEL length (in bp) to be reported. (default 1000) |
+|  --exclude_flag    |   Bitwise sam flag to exclude. (default 3844) |
+|  --tolerance       |   Tolerance between breakpoints (in bp) for clustering deletions as the same event. (default: 100) |
 
 
 ## 👨‍💻 Contributing
