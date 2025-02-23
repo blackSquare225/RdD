@@ -1,4 +1,4 @@
-threads: 20
+threads: 1
 
 min_size: 300
 max_size: 4000
@@ -9,4 +9,5 @@ exclude_flag: 3844
 tolerance: 100
 
 samples:
-  sample1: test
+  sample1: run_prova_barcode03
+  sample2: run_prova_barcode04
